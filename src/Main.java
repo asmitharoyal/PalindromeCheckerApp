@@ -1,39 +1,63 @@
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
+import java.util.Scanner;
 
+/**
+ * MAIN CLASS UseCase7PalindromeCheckerApp
+ * Use Case 7: Deque Based Optimized Palindrome Checker
+ * Description:
+ * This class validates a palindrome using a Deque (Double Ended Queue).
+ * Characters are inserted into the deque and then compared by removing elements from both ends:
+ * removeFirst() and removeLast()
+ * This avoids reversing the string and provides an efficient front-to-back comparison approach.
+ * This use case demonstrates optimal bidirectional traversal using Deque.
+ *
+ * @author Developer
+ * @version 7.0
+ */
 public class Main {
 
+    /**
+     * Application entry point for UC7.
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        // Define the input string to validate
-        String input = "civic";
+        System.out.println("Enter a string to check if it is a palindrome:");
+        String input = scanner.nextLine().toLowerCase().replaceAll("[^a-z0-9]", "");
 
-        // Create a Queue to store characters in FIFO order
-        Queue<Character> queue = new LinkedList<>();
-
-        // Create a Stack to store characters in LIFO order
-        Stack<Character> stack = new Stack<>();
-
-        // Insert each character into both queue and stack
-        for (char c : input.toCharArray()) {
-            queue.add(c);
-            stack.push(c);
+        if (isPalindrome(input)) {
+            System.out.println("✅ The string is a palindrome!");
+        } else {
+            System.out.println("❌ The string is NOT a palindrome.");
         }
 
-        // Flag to track palindrome status
-        boolean isPalindrome = true;
+        scanner.close();
+    }
 
-        // Compare characters until the queue becomes empty
-        while (!queue.isEmpty()) {
+    /**
+     * Checks if a string is a palindrome using a Deque.
+     *
+     * @param str Input string
+     * @return true if palindrome, false otherwise
+     */
+    public static boolean isPalindrome(String str) {
+        Deque<Character> deque = new LinkedList<>();
 
-            if (!queue.remove().equals(stack.pop())) {
-                isPalindrome = false;
-                break;
+        // Add all characters to the deque
+        for (char ch : str.toCharArray()) {
+            deque.addLast(ch);
+        }
+
+        // Compare front and back
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
             }
         }
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        return true;
     }
 }
