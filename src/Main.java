@@ -1,11 +1,25 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 1.0");
-        System.out.println("System initialized successfully.");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
+        // Remove spaces and convert to lowercase
+        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        StringBuilder sb = new StringBuilder(cleaned);
+        String reversed = sb.reverse().toString();
+
+        if(cleaned.equals(reversed)){
+            System.out.println("It is a Palindrome");
+        } else {
+            System.out.println("Not a Palindrome");
+        }
+
+        sc.close();
     }
-
 }
