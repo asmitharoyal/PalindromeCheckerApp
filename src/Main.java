@@ -1,35 +1,25 @@
 import java.util.Scanner;
 
 /**
- * MAIN CLASS UseCase10PalindromeCheckerApp
- * Use Case 10: Normalized Palindrome Validation
+ * MAIN CLASS UseCase11PalindromeCheckerApp
+ * Use Case 11: Palindrome Checker
  *
  * Description:
- * This class validates a palindrome after preprocessing the input string.
- * Normalization includes:
- * - Removing spaces and symbols
- * - Converting to lowercase
- * This ensures the palindrome check is logical rather than character-format dependent.
+ * This class validates whether a given string is a palindrome.
+ * It handles case-insensitive comparison and ignores non-alphanumeric characters.
  *
- * Example: "A man a plan a canal Panama"
- *
- * @author Developer
- * @version 10.8
+ * Author: Developer
+ * Version: 11.0
  */
 public class Main{
 
-    /**
-     * Application entry point for UC10
-     *
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter a string to check if it is a palindrome:");
         String input = scanner.nextLine();
 
-        // Normalize the string: remove non-alphanumeric characters and convert to lowercase
+        // Normalize input: remove non-alphanumeric characters and convert to lowercase
         String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
         boolean isPalindrome = true;
@@ -42,7 +32,7 @@ public class Main{
             }
         }
 
-        // Output the result
+        // Print result
         System.out.println("Input: " + input);
         System.out.println("Is Palindrome?: " + isPalindrome);
 
