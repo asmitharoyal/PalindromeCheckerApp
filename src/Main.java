@@ -1,40 +1,63 @@
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
- * MAIN CLASS UseCase11PalindromeCheckerApp
- * Use Case 11: Palindrome Checker
- *
- * Description:
- * This class validates whether a given string is a palindrome.
- * It handles case-insensitive comparison and ignores non-alphanumeric characters.
- *
- * Author: Developer
- * Version: 11.0
+ * INTERFACE - PalindromeStrategy
+ * Defines a contract for all palindrome checking algorithms.
  */
-public class Main{
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+/**
+ * CLASS - StackStrategy
+ * Implements palindrome validation using a Stack (LIFO).
+ */
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean check(String input) {
+        if (input == null) return false;
 
-        System.out.println("Enter a string to check if it is a palindrome:");
-        String input = scanner.nextLine();
+        // Normalize input: remove case sensitivity
+        String cleanInput = input.toLowerCase();
+        Stack<Character> stack = new Stack<>();
 
-        // Normalize input: remove non-alphanumeric characters and convert to lowercase
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        // Push each character of the input string onto the stack
+        for (char c : cleanInput.toCharArray()) {
+            stack.push(c);
+        }
 
-        boolean isPalindrome = true;
-
-        // Compare characters from both ends
-        for (int i = 0; i < normalized.length() / 2; i++) {
-            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
+        // Compare characters by popping from the stack
+        for (char c : cleanInput.toCharArray()) {
+            if (c != stack.pop()) {
+                return false; // Mismatch found
             }
         }
 
-        // Print result
-        System.out.println("Input: " + input);
-        System.out.println("Is Palindrome?: " + isPalindrome);
+        return true;
+    }
+}
+
+/**
+ * MAIN CLASS - UseCase12PalindromeCheckerApp
+ * Demonstrates runtime strategy injection.
+ */
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Setup the Strategy (using the Stack implementation)
+        PalindromeStrategy strategy = new StackStrategy();
+
+        // 2. Get User Input
+        System.out.print("Input : ");
+        String input = scanner.nextLine();
+
+        // 3. Execute the selected algorithm
+        boolean isPalindrome = strategy.check(input);
+
+        // 4. Output results
+        System.out.println("Is Palindrome? : " + isPalindrome);
 
         scanner.close();
     }
